@@ -1,0 +1,30 @@
+package com.mudit.piingouserservice.dto;
+
+import com.mudit.piingouserservice.entity.User;
+
+import java.time.OffsetDateTime;
+import java.util.UUID;
+
+public record UserResponse(
+        UUID id,
+        String username,
+        String displayName,
+        String email,
+        String bio,
+        String avatarUrl,
+        boolean profileComplete,
+        OffsetDateTime createdAt
+) {
+    public static UserResponse from(User user) {
+        return new UserResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getDisplayName(),
+                user.getEmail(),
+                user.getBio(),
+                user.getAvatarUrl(),
+                user.isProfileComplete(),
+                user.getCreatedAt()
+        );
+    }
+}
