@@ -8,7 +8,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -44,9 +45,20 @@ public class User {
     @Column(name="is_active")
     private boolean isActive;
 
-    @Column(name="created_at")
+    @Column(name = "created_at", updatable = false)
     private OffsetDateTime createdAt;
 
-    @Column(name="updated_at")
+    @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = OffsetDateTime.now();
+        updatedAt = OffsetDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = OffsetDateTime.now();
+    }
 }
